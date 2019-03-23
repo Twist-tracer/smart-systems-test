@@ -1,0 +1,38 @@
+version: "3"
+services:
+  nginx:
+    image: nginx:alpine
+    volumes:
+    - ${BASE_PATH}/config/nginx/sites-available:/etc/nginx/sites-available/
+
+    - ${BASE_PATH}/logs/nginx:/var/log/nginx/
+
+    - ${BASE_PATH}:/var/www/
+    - ${BASE_PATH}/config/nginx/nginx.conf:/etc/nginx/nginx.conf
+    - ${BASE_PATH}/config/nginx/certificates:/etc/nginx/ssl/
+    ports:
+    - "80:80"
+    - "443:443"
+    links:
+    - php
+
+  php:
+    build:
+      context: .
+      dockerfile: ./config/php/Dockerfile
+    image: smart-systems-php
+    links:
+    - mysql
+    volumes:
+    - ${BASE_PATH}:/var/www/
+    - ${BASE_PATH}/config/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+
+  mysql:
+    image: mysql:5.6
+    ports:
+    - "3306:3306"
+    environment:
+    - MYSQL_ROOT_PASSWORD=123456
+    - MYSQL_DATABASE=smart-systems
+    - MYSQL_USER=admin
+    - MYSQL_PASSWORD=123456
