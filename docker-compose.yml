@@ -27,6 +27,11 @@ services:
     - ${BASE_PATH}:/var/www/
     - ${BASE_PATH}/config/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
 
+  composer:
+    image: composer:1.8.0
+    volumes:
+      - ${BASE_PATH}:/app
+
   mysql:
     image: mysql:5.6
     ports:
