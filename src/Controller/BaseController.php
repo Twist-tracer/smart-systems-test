@@ -8,11 +8,22 @@
 
 namespace App\Controller;
 
+use App\Container;
 use App\View;
 
 abstract class BaseController
 {
+	protected $title = '';
+
 	protected $layout = 'site';
+
+	/** @var Container  */
+	protected $_container;
+
+	public function __construct(Container $container)
+	{
+		$this->_container = $container;
+	}
 
 	/**
 	 * @param string $viewName
@@ -26,6 +37,7 @@ abstract class BaseController
 
 		return $view->render(sprintf('layouts/%s', $this->layout), [
 			'content' => $content,
+			'title' => $this->title
 		]);
 	}
 }

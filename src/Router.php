@@ -34,7 +34,9 @@ class Router
 			return $response->setHeader('HTTP/1.0 404 Not Found');
 		}
 
-		$controller = new $route['class'];
+
+		$container = Container::getInstance();
+		$controller = new $route['class']($container);
 		$method = sprintf('action%s', ucfirst($route['action']));
 
 		try {

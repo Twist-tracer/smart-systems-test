@@ -15,12 +15,42 @@ class SiteController extends BaseController
 {
 	protected $layout = 'site';
 
-	public function actionIndex(Request $request) {
+	/**
+	 * Главная страница
+	 *
+	 * @path /
+	 *
+	 * @param Request $request
+	 *
+	 * @return string
+	 */
+	public function actionIndex(Request $request) : string {
+		$this->title = 'Самая лучшая анкета';
 
+		$userRepo = $this->_container->get_user_repository();
+		$fieldRepo = $this->_container->get_field_repository();
+		$fieldPersister = $this->_container->get_field_persister();
+		$userFieldRepo = $this->_container->get_user_field_repository();
 
+		$user = $userRepo->findUserByFingerPrint();
 
+		$fields = $fieldRepo->getSystemFields();
 
-		return $this->render('index');
+		if(empty($fields)) {
+			$fieldPersister->createSystemFields();
+			$fields = $fieldRepo->getSystemFields();
+		}
+
+		if($user) {
+			$userFieldIds = $userFieldRepo->getUserFieldIds($user->getId());
+			if(!empty($userFieldIds)) {
+				$fields = array_merge($fields, $fieldRepo->getFieldsByIds($userFieldIds));
+			}
+		}
+
+		return $this->render('index', [
+			'fields' => $fields,
+		]);
 	}
 
 

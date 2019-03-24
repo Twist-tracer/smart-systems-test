@@ -94,4 +94,13 @@ class Request
 		return $this->headers;
 	}
 
+	/**
+	 * @param int|string $key
+	 * @return string|null
+	 */
+	public function getHeader($key) :? string
+	{
+		return $this->headers[$key] ?? null;
+	}
+
 }

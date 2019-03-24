@@ -1,1 +1,7 @@
-<h1>Hello world!</h1>
+<?php
+
+/** @var \App\View $this */
+
+?>
+
+<?=$this->render('ui/questionnaire/questionnaire', ['fields' => $fields])?>

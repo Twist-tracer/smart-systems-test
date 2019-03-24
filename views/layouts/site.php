@@ -1,5 +1,6 @@
 <?php
     $content = $content ?? '';
+    $title = $title ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -9,11 +10,10 @@
 
 	<link href="/assets/css/main.css" rel="stylesheet">
 
-	<title>Home page</title>
+	<title><?=$title?></title>
 </head>
 <body>
-
-	<?= $content ?>
+    <main><?= $content ?></main>
 
 	<script src="/assets/js/main.js"></script>
 </html>

@@ -1,16 +1,13 @@
 <?php
 
 $config = require_once __DIR__.'/../config/db.php';
-
-$pdo = new PDO($config['dsn'], $config['username'], $config['password']);
-
+$db = new \App\DataBase($config['dsn'], $config['username'], $config['password']);
 
 $tables = [
 	'users' => '
 		CREATE TABLE IF NOT EXISTS `users` (
 		  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-		  `digital_print` VARCHAR(128) NOT NULL,
-		  `ip` VARCHAR(46) NOT NULL,
+		  `fingerprint` VARCHAR(128) NOT NULL,
 		  PRIMARY KEY (`id`),
 		  UNIQUE INDEX `digital_print_UNIQUE` (`digital_print` ASC))
 		ENGINE = InnoDB
@@ -84,7 +81,7 @@ $tables = [
 foreach ($tables as $tableName => $sql) {
 	echo sprintf('Start creating %s table', $tableName) . PHP_EOL;
 
-	echo $pdo->query($sql)
+	echo $db->query($sql)
 		? sprintf('Table %s has been created', $tableName) . PHP_EOL
 		: sprintf('Could not create %s table', $tableName) . PHP_EOL;
 }
