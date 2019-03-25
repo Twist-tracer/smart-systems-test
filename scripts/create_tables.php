@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__.'/../vendor/autoload.php';
+
 $config = require_once __DIR__.'/../config/db.php';
 $db = new \App\DataBase($config['dsn'], $config['username'], $config['password']);
 
