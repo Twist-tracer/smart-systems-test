@@ -14,9 +14,15 @@ class Request
 {
 	use Singleton;
 
+	const METHOD_GET = 'GET';
+
+	const METHOD_POST = 'POST';
+
 	private $path;
 
 	private $headers;
+
+	private $method;
 
 	private $get;
 
@@ -29,6 +35,7 @@ class Request
 		$this->path = $this->extractPathFromGlobals();
 		$this->get = $_GET;
 		$this->post = $_POST;
+		$this->method = $_SERVER['REQUEST_METHOD'];
 		$this->body = file_get_contents('php://input');
 		$this->headers = $this->extractHeadersFromGlobals();
 
@@ -53,9 +60,25 @@ class Request
 	/**
 	 * @return string
 	 */
+	public function getBody() :string
+	{
+		return $this->body;
+	}
+
+	/**
+	 * @return string
+	 */
 	public function getPath() :string
 	{
 		return $this->path;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getMethod() :string
+	{
+		return $this->method;
 	}
 
 	/**

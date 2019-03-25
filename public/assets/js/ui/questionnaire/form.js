@@ -45,10 +45,22 @@
         }
 
         if(!fieldTypes.hasOwnProperty(fieldType)) {
-            alert('Вы не указали не существующий тип поля');
+            alert('Вы указали не существующий тип поля');
             return;
         }
 
+        fetch('/api/v1/fields', {
+            headers: { "Content-Type": "application/json; charset=utf-8" },
+            method: 'POST',
+            body: JSON.stringify({
+                name: fieldName,
+                type: fieldType
+            })
+        }).then(function (response) {
+            response.json().then(function (data) {
+
+            })
+        })
 
         // TODO save and render new field
 

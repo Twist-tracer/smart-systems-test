@@ -48,7 +48,11 @@ class FieldPersister extends BasePersister
 		}
 	}
 
-	public function add(Field $field) {
+	/**
+	 * @param Field $field
+	 * @return bool
+	 */
+	public function add(Field $field) :bool {
 		$sql = sprintf('insert into %s (name, type, system) values (:name, :type, :system)', $this->table);
 		$bind_params = [
 			':name' => $field->getName(),
@@ -60,7 +64,10 @@ class FieldPersister extends BasePersister
 
 		if($statement->execute($bind_params)) {
 			$field->setId($this->_db->lastInsertId());
+			return true;
 		}
+
+		return false;
 	}
 
 }

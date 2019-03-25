@@ -7,10 +7,11 @@ $tables = [
 	'users' => '
 		CREATE TABLE IF NOT EXISTS `users` (
 		  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-		  `fingerprint` VARCHAR(128) NOT NULL,
+		  `digital_print` VARCHAR(128) NOT NULL,
 		  PRIMARY KEY (`id`),
 		  UNIQUE INDEX `digital_print_UNIQUE` (`digital_print` ASC))
 		ENGINE = InnoDB
+		DEFAULT CHARACTER SET = utf8
 	',
 	'questionnaires' => '
 		CREATE TABLE IF NOT EXISTS `questionnaires` (
@@ -24,6 +25,7 @@ $tables = [
 			ON DELETE NO ACTION
 			ON UPDATE NO ACTION)
 		ENGINE = InnoDB
+		DEFAULT CHARACTER SET = utf8
 	',
 	'fields' => '
 		CREATE TABLE IF NOT EXISTS `fields` (
@@ -34,6 +36,7 @@ $tables = [
 		  PRIMARY KEY (`id`),
 		  UNIQUE INDEX `field_name_type_uix` (`name` ASC, `type` ASC))
 		ENGINE = InnoDB
+		DEFAULT CHARACTER SET = utf8
 	',
 	'user_fields' => '
 		CREATE TABLE IF NOT EXISTS `user_fields` (
@@ -54,6 +57,7 @@ $tables = [
 			ON DELETE NO ACTION
 			ON UPDATE NO ACTION)
 		ENGINE = InnoDB
+		DEFAULT CHARACTER SET = utf8
 	',
 	'questionnaire_field_values' => '
 		CREATE TABLE IF NOT EXISTS `questionnaire_field_values` (
@@ -75,6 +79,7 @@ $tables = [
 			ON DELETE NO ACTION
 			ON UPDATE NO ACTION)
 		ENGINE = InnoDB
+		DEFAULT CHARACTER SET = utf8
 	',
 ];
 

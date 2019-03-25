@@ -14,6 +14,12 @@ class Response
 {
 	use Singleton;
 
+	const STATUS_OK = 200;
+
+	const STATUS_BAD_REQUEST = 400;
+
+	const STATUS_INTERNAL_SERVER_ERROR = 500;
+
 	private $headers;
 
 	private $body;
