@@ -43,9 +43,9 @@ class User
 	}
 
 	/**
-	 * @return string
+	 * @return int
 	 */
-	public function getId() :? string
+	public function getId() :? int
 	{
 		return $this->fields['id'] ?? null;
 	}

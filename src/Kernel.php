@@ -8,10 +8,15 @@
  */
 
 namespace App;
+use App\Entity\QuestionnaireFieldValue;
 use App\Persister\FieldPersister;
+use App\Persister\QuestionnaireFieldValuePersister;
+use App\Persister\QuestionnairePersister;
 use App\Persister\UserFieldPersister;
 use App\Persister\UserPersister;
 use App\Repository\FieldRepository;
+use App\Repository\QuestionnaireFieldValueRepository;
+use App\Repository\QuestionnaireRepository;
 use App\Repository\UserFieldRepository;
 use App\Repository\UserRepository;
 use App\Service\UserService;
@@ -77,6 +82,18 @@ class Kernel
 					$container->get_user_repository(),
 					$container->get_user_persister()
 				);
+			})
+			->set(QuestionnairePersister::class, function(Container $container) {
+				return new QuestionnairePersister($container->get_data_base());
+			})
+			->set(QuestionnaireRepository::class, function(Container $container) {
+				return new QuestionnaireRepository($container->get_data_base());
+			})
+			->set(QuestionnaireFieldValuePersister::class, function(Container $container) {
+				return new QuestionnaireFieldValuePersister($container->get_data_base());
+			})
+			->set(QuestionnaireFieldValueRepository::class, function(Container $container) {
+				return new QuestionnaireFieldValueRepository($container->get_data_base());
 			});
 	}
 }

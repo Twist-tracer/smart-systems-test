@@ -10,9 +10,13 @@ namespace App;
 
 
 use App\Persister\FieldPersister;
+use App\Persister\QuestionnaireFieldValuePersister;
+use App\Persister\QuestionnairePersister;
 use App\Persister\UserFieldPersister;
 use App\Persister\UserPersister;
 use App\Repository\FieldRepository;
+use App\Repository\QuestionnaireFieldValueRepository;
+use App\Repository\QuestionnaireRepository;
 use App\Repository\UserFieldRepository;
 use App\Repository\UserRepository;
 use App\Service\UserService;
@@ -86,6 +90,26 @@ class Container
 	public function get_user_service() :? UserService
 	{
 		return $this->get(UserService::class);
+	}
+
+	public function get_questionnaire_persister() :? QuestionnairePersister
+	{
+		return $this->get(QuestionnairePersister::class);
+	}
+
+	public function get_questionnaire_repository() :? QuestionnaireRepository
+	{
+		return $this->get(QuestionnaireRepository::class);
+	}
+
+	public function get_questionnaire_field_value_persister() :? QuestionnaireFieldValuePersister
+	{
+		return $this->get(QuestionnaireFieldValuePersister::class);
+	}
+
+	public function get_questionnaire_field_value_reposistory() :? QuestionnaireFieldValueRepository
+	{
+		return $this->get(QuestionnaireFieldValueRepository::class);
 	}
 
 }

@@ -2,12 +2,14 @@
 /** @var \App\Entity\Field[] $fields */
 ?>
 
-<form action="/" class="questionnaire-form">
+<form class="questionnaire-form">
+    <div class="questionnaire-form-info"></div>
+
 	<table class="questionnaire-form-fields">
 		<?php foreach ($fields as $field) {?>
-			<tr class="questionnaire-form-field">
+			<tr class="questionnaire-form-field" data-id="<?=$field->getId()?>">
 				<td><label for="field-<?=$field->getId()?>"><?=$field->getName()?>:</label></td>
-				<td><input id="field-<?=$field->getId()?>" type="<?=$field->getType()?>" ></td>
+				<td><input id="field-<?=$field->getId()?>" name="fields[<?=$field->getId()?>]" type="<?=$field->getType()?>" ></td>
 			</tr>
 		<?php }?>
 	</table>

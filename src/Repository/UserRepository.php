@@ -36,7 +36,7 @@ class UserRepository extends BaseRepository
 		$result = $statement->fetch();
 		$user = new User();
 		$user
-			->setId($result['id'])
+			->setId((int)$result['id'])
 			->setFingerPrint($result['fingerprint']);
 
 		return $user;

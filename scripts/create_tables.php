@@ -41,7 +41,7 @@ $tables = [
 		DEFAULT CHARACTER SET = utf8
 	',
 	'user_fields' => '
-		CREATE TABLE IF NOT EXISTS `smart-systems`.`user_fields` (
+		CREATE TABLE IF NOT EXISTS `user_fields` (
 		  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 		  `field_id` INT(10) UNSIGNED NOT NULL,
 		  `user_id` INT(10) UNSIGNED NOT NULL,
@@ -51,19 +51,19 @@ $tables = [
 		  UNIQUE INDEX `user_field_uix` (`field_id` ASC, `user_id` ASC),
 		  CONSTRAINT `user_fields_field_fk`
 			FOREIGN KEY (`field_id`)
-			REFERENCES `smart-systems`.`fields` (`id`)
+			REFERENCES `fields` (`id`)
 			ON DELETE NO ACTION
 			ON UPDATE NO ACTION,
 		  CONSTRAINT `user_fields_user_fk`
 			FOREIGN KEY (`user_id`)
-			REFERENCES `smart-systems`.`users` (`id`)
+			REFERENCES `users` (`id`)
 			ON DELETE NO ACTION
 			ON UPDATE NO ACTION)
 		ENGINE = InnoDB
 	',
 	'questionnaire_field_values' => '
 		CREATE TABLE IF NOT EXISTS `questionnaire_field_values` (
-		  `id` INT(10) NOT NULL,
+		  `id` INT(10) NOT NULL AUTO_INCREMENT,
 		  `questionnaire_id` INT(10) UNSIGNED NOT NULL,
 		  `field_id` INT(10) UNSIGNED NOT NULL,
 		  `value` VARCHAR(255) NOT NULL,
@@ -81,7 +81,6 @@ $tables = [
 			ON DELETE NO ACTION
 			ON UPDATE NO ACTION)
 		ENGINE = InnoDB
-		DEFAULT CHARACTER SET = utf8
 	',
 ];
 

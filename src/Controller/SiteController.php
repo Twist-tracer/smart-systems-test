@@ -9,6 +9,8 @@
 
 namespace App\Controller;
 
+use App\Entity\QuestionnaireFieldValue;
+use App\Exception\Http\NotFoundHttpException;
 use App\Request;
 
 class SiteController extends BaseController
@@ -50,6 +52,54 @@ class SiteController extends BaseController
 
 		return $this->render('index', [
 			'fields' => $fields,
+		]);
+	}
+
+	/**
+	 * @param Request $request
+	 * @throws NotFoundHttpException
+	 */
+	public function actionQuestionnaire(Request $request) {
+		$queryParams = $request->getQueryParams();
+
+		if(!isset($queryParams['id'])) {
+			throw new NotFoundHttpException();
+		}
+
+		$questionnaireId = (int)$queryParams['id'];
+
+		if($questionnaireId <= 0) {
+			throw new NotFoundHttpException();
+		}
+
+		$questionnaireRepo = $this->_container->get_questionnaire_repository();
+		$questionnaire = $questionnaireRepo->getById($questionnaireId);
+
+		if(!$questionnaire) {
+			throw new NotFoundHttpException();
+		}
+
+		$userService = $this->_container->get_user_service();
+		$user = $userService->getCurrentUser();
+
+		if($questionnaire->getUserId() !== $user->getId()) {
+			throw new NotFoundHttpException();
+		}
+
+		$questionnaireFieldValueRepo = $this->_container->get_questionnaire_field_value_reposistory();
+		$fieldRepo = $this->_container->get_field_repository();
+
+		$values = $questionnaireFieldValueRepo->getByQuestionnaireId($questionnaire->getId());
+
+		$fieldIds = array_map(function (QuestionnaireFieldValue $value) {
+			return $value->getFieldId();
+		}, $values);
+
+		$fields = $fieldRepo->getFieldsByIds($fieldIds);
+
+		return $this->render('questionnaire', [
+			'fields' => $fields,
+			'values' => $values,
 		]);
 	}
 

@@ -30,7 +30,7 @@ class UserPersister extends BasePersister
 		$statement = $this->_db->prepare($sql);
 
 		if($statement->execute($bind_params)) {
-			$user->setId($this->_db->lastInsertId());
+			$user->setId((int)$this->_db->lastInsertId());
 			return true;
 		}
 

@@ -9,6 +9,7 @@
 namespace App;
 
 use App\Controller\Api\V1\FieldsController;
+use App\Controller\Api\V1\QuestionnairesController;
 use App\Controller\SiteController;
 use App\Exception\Http\NotFoundHttpException;
 use App\Traits\Singleton;
@@ -23,9 +24,20 @@ class Router
 			'action' => 'index',
 			'methods' => [Request::METHOD_GET]
 		],
+		'/questionnaire' => [
+			'class' => SiteController::class,
+			'action' => 'questionnaire',
+			'methods' => [Request::METHOD_GET]
+		],
 
 		'/api/v1/fields' => [
 			'class' => FieldsController::class,
+			'action' => 'create',
+			'methods' => [Request::METHOD_POST]
+		],
+
+		'/api/v1/questionnaires' => [
+			'class' => QuestionnairesController::class,
 			'action' => 'create',
 			'methods' => [Request::METHOD_POST]
 		]

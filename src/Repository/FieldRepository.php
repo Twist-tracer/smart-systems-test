@@ -57,13 +57,13 @@ class FieldRepository extends BaseRepository
 
 		$sql = sprintf('select * from %s where id in (%s)', $this->table, implode(',', $idKeys));
 
-		$statement = $this->_db->prepare($sql);
-
+		$bind_params = [];
 		foreach($ids as $id) {
-			$statement->bindParam(':id_' . $id, $id);
+			$bind_params[':id_' . $id] = $id;
 		}
 
-		$statement->execute();
+		$statement = $this->_db->prepare($sql);
+		$statement->execute($bind_params);
 
 		if($statement->rowCount() <= 0) {
 			return [];
