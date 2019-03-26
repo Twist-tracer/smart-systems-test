@@ -79,4 +79,24 @@ class FieldRepository extends BaseRepository
 		return $result;
 	}
 
+    public function findByNameAndType(string $name, string $type) :? Field
+    {
+        $sql = sprintf('select * from %s where name = :name and type = :type', $this->table);
+        $bind_params = [
+            ':name' => $name,
+            ':type' => $type,
+        ];
+        $statement = $this->_db->prepare($sql);
+        $statement->execute($bind_params);
+
+        if($statement->rowCount() <= 0) {
+            return null;
+        }
+
+        $result = $statement->fetch();
+        $field = new Field($result);
+
+        return $field;
+    }
+
 }

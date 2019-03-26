@@ -27,24 +27,33 @@ class FieldsController extends BaseApiController
 		}
 
 		$fieldPersister = $this->_container->get_field_persister();
+		$fieldRepository = $this->_container->get_field_repository();
 		$userFieldPersister = $this->_container->get_user_field_persister();
 
-		$field = new Field();
-		$field
-			->setName($data['name'])
-			->setType($data['type'])
-			->setSystem(false);
+        $field = $fieldRepository->findByNameAndType($data['name'], $data['type']);
 
-		// TODO check if field exists
-		if(!$fieldPersister->add($field)) {
-			return $this->setUpResponse(['error' => 'Something went wrong'], Response::STATUS_INTERNAL_SERVER_ERROR);
-		}
+
+        if(!$field) {
+            $field = new Field();
+            $field
+                ->setName($data['name'])
+                ->setType($data['type'])
+                ->setSystem(false);
+
+            if(!$fieldPersister->add($field)) {
+                return $this->setUpResponse(['error' => 'Something went wrong'], Response::STATUS_INTERNAL_SERVER_ERROR);
+            }
+
+        }
+
+
 
 
 		// TODO add to user fields
 
 
-		return $this->setUpResponse(['status' => $field->getId()]);
+
+		return $this->setUpResponse(['id' => $field->getId()]);
 	}
 
 	private function validateActionCreate(array $data) : bool {

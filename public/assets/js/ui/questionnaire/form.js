@@ -39,12 +39,12 @@
 
         var fieldType = parseInt(prompt(fieldTypeMessage));
 
-        if(fieldName.length <= 0) {
+        if(!fieldName || fieldName.length <= 0) {
             alert('Вы не указали название поля');
             return;
         }
 
-        if(!fieldTypes.hasOwnProperty(fieldType)) {
+        if(!fieldType || !fieldTypes.hasOwnProperty(fieldType)) {
             alert('Вы указали не существующий тип поля');
             return;
         }
