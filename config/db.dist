@@ -1,0 +1,8 @@
+<?php
+
+return [
+    'dsn' => 'mysql:host=mysql;port=3306;dbname=smart-systems',
+    'username' => 'admin',
+    'password' => '123456',
+    'charset' => 'utf8',
+];
