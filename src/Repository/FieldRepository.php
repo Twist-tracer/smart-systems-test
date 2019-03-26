@@ -51,12 +51,19 @@ class FieldRepository extends BaseRepository
 
 	public function getFieldsByIds(array $ids) : array
 	{
-		$sql = sprintf('select * from %s where id in (:ids)', $this->table);
-		$bind_params = [
-			':ids' => array_map('int', $ids),
-		];
+		$idKeys = array_map(function($key){
+			return ':id_'.$key;
+		}, $ids);
+
+		$sql = sprintf('select * from %s where id in (%s)', $this->table, implode(',', $idKeys));
+
 		$statement = $this->_db->prepare($sql);
-		$statement->execute($bind_params);
+
+		foreach($ids as $id) {
+			$statement->bindParam(':id_' . $id, $id);
+		}
+
+		$statement->execute();
 
 		if($statement->rowCount() <= 0) {
 			return [];

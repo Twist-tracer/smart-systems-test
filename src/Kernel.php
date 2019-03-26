@@ -14,6 +14,7 @@ use App\Persister\UserPersister;
 use App\Repository\FieldRepository;
 use App\Repository\UserFieldRepository;
 use App\Repository\UserRepository;
+use App\Service\UserService;
 
 /**
  * Class Kernel
@@ -46,7 +47,12 @@ class Kernel
 			->set(DataBase::class, function(Container $container) {
 				$config = require_once __DIR__.'/../config/db.php';
 
-				return new DataBase($config['dsn'], $config['username'], $config['password']);
+				$config['dsn'] .= ';charset='.$config['charset'];
+				$db = new DataBase($config['dsn'], $config['username'], $config['password']);
+
+				$db->exec('set names ' . $config['charset']);
+
+				return $db;
 			})
 			->set(UserRepository::class, function(Container $container) {
 				return new UserRepository($container->get_data_base());
@@ -65,8 +71,12 @@ class Kernel
 			})
 			->set(UserFieldPersister::class, function(Container $container) {
 				return new UserFieldPersister($container->get_data_base());
+			})
+			->set(UserService::class, function(Container $container) {
+				return new UserService(
+					$container->get_user_repository(),
+					$container->get_user_persister()
+				);
 			});
-
-
 	}
 }

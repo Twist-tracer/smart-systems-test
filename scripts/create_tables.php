@@ -9,9 +9,9 @@ $tables = [
 	'users' => '
 		CREATE TABLE IF NOT EXISTS `users` (
 		  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-		  `digital_print` VARCHAR(128) NOT NULL,
+		  `fingerprint` VARCHAR(128) NOT NULL,
 		  PRIMARY KEY (`id`),
-		  UNIQUE INDEX `digital_print_UNIQUE` (`digital_print` ASC))
+		  UNIQUE INDEX `fingerprint_UNIQUE` (`fingerprint` ASC))
 		ENGINE = InnoDB
 		DEFAULT CHARACTER SET = utf8
 	',
@@ -41,25 +41,25 @@ $tables = [
 		DEFAULT CHARACTER SET = utf8
 	',
 	'user_fields' => '
-		CREATE TABLE IF NOT EXISTS `user_fields` (
+		CREATE TABLE IF NOT EXISTS `smart-systems`.`user_fields` (
 		  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 		  `field_id` INT(10) UNSIGNED NOT NULL,
 		  `user_id` INT(10) UNSIGNED NOT NULL,
 		  PRIMARY KEY (`id`),
 		  INDEX `user_fields_field_fk_idx` (`field_id` ASC),
 		  INDEX `user_fields_user_fk_idx` (`user_id` ASC),
+		  UNIQUE INDEX `user_field_uix` (`field_id` ASC, `user_id` ASC),
 		  CONSTRAINT `user_fields_field_fk`
 			FOREIGN KEY (`field_id`)
-			REFERENCES `fields` (`id`)
+			REFERENCES `smart-systems`.`fields` (`id`)
 			ON DELETE NO ACTION
 			ON UPDATE NO ACTION,
 		  CONSTRAINT `user_fields_user_fk`
 			FOREIGN KEY (`user_id`)
-			REFERENCES `users` (`id`)
+			REFERENCES `smart-systems`.`users` (`id`)
 			ON DELETE NO ACTION
 			ON UPDATE NO ACTION)
 		ENGINE = InnoDB
-		DEFAULT CHARACTER SET = utf8
 	',
 	'questionnaire_field_values' => '
 		CREATE TABLE IF NOT EXISTS `questionnaire_field_values` (

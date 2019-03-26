@@ -11,6 +11,7 @@ namespace App\Controller\Api\V1;
 
 use App\Controller\Api\BaseApiController;
 use App\Entity\Field;
+use App\Entity\UserField;
 use App\Request;
 use App\Response;
 
@@ -29,10 +30,11 @@ class FieldsController extends BaseApiController
 		$fieldPersister = $this->_container->get_field_persister();
 		$fieldRepository = $this->_container->get_field_repository();
 		$userFieldPersister = $this->_container->get_user_field_persister();
+		$userService = $this->_container->get_user_service();
+
+		$user = $userService->getCurrentUser();
 
         $field = $fieldRepository->findByNameAndType($data['name'], $data['type']);
-
-
         if(!$field) {
             $field = new Field();
             $field
@@ -46,12 +48,12 @@ class FieldsController extends BaseApiController
 
         }
 
+        $userField = new UserField();
+		$userField
+			->setUserId($user->getId())
+			->setFieldId($field->getId());
 
-
-
-		// TODO add to user fields
-
-
+        $userFieldPersister->add($userField);
 
 		return $this->setUpResponse(['id' => $field->getId()]);
 	}

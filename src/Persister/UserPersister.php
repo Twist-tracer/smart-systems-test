@@ -17,9 +17,24 @@ class UserPersister extends BasePersister
 
 	protected $table = self::TABLE;
 
-	public function add(User $user)
-	{
+	/**
+	 * @param User $user
+	 * @return bool
+	 */
+	public function add(User $user) :bool {
+		$sql = sprintf('insert into %s (fingerprint) values (:fingerprint)', $this->table);
+		$bind_params = [
+			':fingerprint' => $user->getFingerPrint(),
+		];
 
+		$statement = $this->_db->prepare($sql);
+
+		if($statement->execute($bind_params)) {
+			$user->setId($this->_db->lastInsertId());
+			return true;
+		}
+
+		return false;
 	}
 
 }

@@ -15,6 +15,7 @@ use App\Persister\UserPersister;
 use App\Repository\FieldRepository;
 use App\Repository\UserFieldRepository;
 use App\Repository\UserRepository;
+use App\Service\UserService;
 use App\Traits\Singleton;
 
 class Container
@@ -80,6 +81,11 @@ class Container
 	public function get_user_field_persister() :? UserFieldPersister
 	{
 		return $this->get(UserFieldPersister::class);
+	}
+
+	public function get_user_service() :? UserService
+	{
+		return $this->get(UserService::class);
 	}
 
 }

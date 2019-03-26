@@ -32,7 +32,7 @@ class SiteController extends BaseController
 		$fieldPersister = $this->_container->get_field_persister();
 		$userFieldRepo = $this->_container->get_user_field_repository();
 
-		$user = $userRepo->findUserByFingerPrint();
+		$user = $userRepo->getCurrentUser();
 
 		$fields = $fieldRepo->getSystemFields();
 

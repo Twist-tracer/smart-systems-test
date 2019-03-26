@@ -58,13 +58,12 @@
             })
         }).then(function (response) {
             response.json().then(function (data) {
-
+                if(data.hasOwnProperty('id')) {
+                    fieldsList.appendChild(fieldTemplate(data.id, fieldName, fieldType));
+                } else {
+                    alert('Что-то пошло не так, попробуйте добавить поле еще раз.')
+                }
             })
         })
-
-        // TODO save and render new field
-
-
-        // fieldsList.appendChild(fieldTemplate(field.id, field.name, field.type));
     })
 })(window, document);

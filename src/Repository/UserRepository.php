@@ -18,7 +18,7 @@ class UserRepository extends BaseRepository
 	/**
 	 * @return User|null
 	 */
-	public function findUserByFingerPrint() :? User
+	public function getCurrentUser() :? User
 	{
 		$fingerPrint = User::createFingerPrint();
 
